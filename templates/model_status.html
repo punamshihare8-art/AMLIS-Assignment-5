@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>AMLIS | Model Status</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+
+    <h1>Model Status</h1>
+
+    <p>
+        Status and configuration of the machine learning model
+        used for fraud detection.
+    </p>
+
+    <hr>
+
+    <h2>Active Model</h2>
+
+    <p>
+        <strong>Model:</strong> XGBoost Classifier
+    </p>
+
+    <p>
+        <strong>Status:</strong>
+        <span style="color: green;">Active</span>
+    </p>
+
+    <h2>Model File</h2>
+
+    <p>
+        fraud_detection_model.json
+    </p>
+
+    <h2>Label Encoder</h2>
+
+    <p>
+        label_encoder.pkl
+    </p>
+
+    <h2>Performance</h2>
+
+    <p>
+        <strong>Accuracy:</strong> 99.87%
+    </p>
+
+    <p>
+        <strong>Inference Time:</strong> 1.04 ms
+    </p>
+
+    <br>
+
+    <a href="/">← Back to Dashboard</a>
+
+</body>
+
+</html>
