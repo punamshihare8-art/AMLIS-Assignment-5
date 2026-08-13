@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>AMLIS | API Status</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+
+    <h1>API Status</h1>
+
+    <p>
+        Status of the Flask API used by the
+        Online Payment Fraud Detection System.
+    </p>
+
+    <hr>
+
+    <h2>API Server</h2>
+
+    <p>
+        <strong>Status:</strong>
+        <span style="color: green;">Online</span>
+    </p>
+
+    <p>
+        <strong>Framework:</strong> Flask
+    </p>
+
+    <p>
+        <strong>Server:</strong> Local Development Server
+    </p>
+
+    <h2>Available Endpoints</h2>
+
+    <p>
+        <strong>GET /</strong>
+        — Dashboard
+    </p>
+
+    <p>
+        <strong>POST /predict</strong>
+        — Fraud Prediction
+    </p>
+
+    <h2>Prediction Service</h2>
+
+    <p>
+        <strong>Status:</strong>
+        <span style="color: green;">Operational</span>
+    </p>
+
+    <p>
+        The API receives transaction details from the dashboard,
+        sends them to the XGBoost model, and returns the prediction.
+    </p>
+
+    <br>
+
+    <a href="/">← Back to Dashboard</a>
+
+</body>
+
+</html>
