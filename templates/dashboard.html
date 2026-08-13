@@ -1,0 +1,598 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>AMLIS | Fraud Detection Dashboard</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background: #f4f7fb;
+            color: #1e293b;
+        }
+
+        .layout {
+            display: flex;
+            min-height: 100vh;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            width: 240px;
+            background: #111827;
+            color: white;
+            padding: 25px 18px;
+            position: fixed;
+            height: 100vh;
+        }
+
+        .logo {
+            font-size: 25px;
+            font-weight: bold;
+            margin-bottom: 8px;
+        }
+
+        .subtitle {
+            font-size: 12px;
+            color: #94a3b8;
+            margin-bottom: 35px;
+        }
+
+        .menu-title {
+            font-size: 11px;
+            color: #64748b;
+            text-transform: uppercase;
+            margin: 20px 10px 10px;
+        }
+
+        .nav-item {
+            display: block;
+            padding: 13px 14px;
+            margin: 6px 0;
+            border-radius: 8px;
+            color: #cbd5e1;
+            cursor: pointer;
+            text-decoration: none;
+        }
+
+.nav-item:hover,
+.nav-item.active {
+    background: #2563eb;
+    color: white;
+}
+
+        /* Main */
+        .main {
+            margin-left: 240px;
+            width: calc(100% - 240px);
+            padding: 30px;
+        }
+
+        .topbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+
+        .topbar h1 {
+            font-size: 28px;
+        }
+
+        .status {
+            background: #dcfce7;
+            color: #166534;
+            padding: 9px 15px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: bold;
+        }
+
+        /* Cards */
+        .cards {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 18px;
+            margin-bottom: 25px;
+        }
+
+        .card {
+            background: white;
+            padding: 22px;
+            border-radius: 12px;
+            box-shadow: 0 3px 12px rgba(0,0,0,0.06);
+        }
+
+        .card-title {
+            color: #64748b;
+            font-size: 13px;
+            margin-bottom: 10px;
+        }
+
+        .card-value {
+            font-size: 27px;
+            font-weight: bold;
+        }
+
+        .blue {
+            color: #2563eb;
+        }
+
+        .red {
+            color: #dc2626;
+        }
+
+        .green {
+            color: #16a34a;
+        }
+
+        .purple {
+            color: #7c3aed;
+        }
+
+        /* Content */
+        .content-grid {
+            display: grid;
+            grid-template-columns: 1.4fr 1fr;
+            gap: 20px;
+        }
+
+        .panel {
+            background: white;
+            border-radius: 12px;
+            padding: 24px;
+            box-shadow: 0 3px 12px rgba(0,0,0,0.06);
+        }
+
+        .panel h2 {
+            font-size: 18px;
+            margin-bottom: 8px;
+        }
+
+        .panel-description {
+            color: #64748b;
+            font-size: 13px;
+            margin-bottom: 20px;
+        }
+
+        /* Prediction Form */
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        label {
+            display: block;
+            font-size: 13px;
+            font-weight: bold;
+            margin-bottom: 6px;
+        }
+
+        input,
+        select {
+            width: 100%;
+            padding: 11px;
+            border: 1px solid #d1d5db;
+            border-radius: 7px;
+            outline: none;
+        }
+
+        input:focus,
+        select:focus {
+            border-color: #2563eb;
+        }
+
+        .predict-btn {
+            width: 100%;
+            padding: 12px;
+            border: none;
+            border-radius: 7px;
+            background: #2563eb;
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 5px;
+        }
+
+        .predict-btn:hover {
+            background: #1d4ed8;
+        }
+
+        /* Analytics */
+        .analytics {
+            margin-top: 20px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .metric {
+            display: flex;
+            justify-content: space-between;
+            padding: 13px 0;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        .metric:last-child {
+            border-bottom: none;
+        }
+
+        .metric-name {
+            color: #64748b;
+        }
+
+        .metric-value {
+            font-weight: bold;
+        }
+
+        /* Alert */
+        .alert {
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 8px;
+            background: #eff6ff;
+            color: #1e40af;
+            font-size: 13px;
+        }
+
+        /* Responsive */
+        @media (max-width: 1000px) {
+            .cards {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .content-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 700px) {
+            .sidebar {
+                width: 190px;
+            }
+
+            .main {
+                margin-left: 190px;
+                width: calc(100% - 190px);
+                padding: 20px;
+            }
+
+            .cards,
+            .analytics {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="layout">
+
+    <!-- Sidebar -->
+    <aside class="sidebar">
+
+        <div class="logo">AMLIS</div>
+
+        <div class="subtitle">
+            Applied Machine Learning<br>
+            for Industry Solutions
+        </div>
+
+        <div class="menu-title">Main</div>
+
+        <a href="/" class="nav-item active">Dashboard</a>
+
+       <a href="/fraud-detection" class="nav-item">Fraud Detection</a>
+       <a href="/analytics" class="nav-item">Analytics</a>
+       <a href="/model-status" class="nav-item">Model Status</a>
+       <a href="/api-status" class="nav-item">API Status</a>
+    </aside>
+
+
+    <!-- Main Content -->
+    <main class="main">
+
+        <div class="topbar">
+
+            <div>
+                <h1>Fraud Detection Dashboard</h1>
+                <p class="panel-description">
+                    Online payment transaction monitoring system
+                </p>
+            </div>
+
+            <div class="status">
+                ● System Online
+            </div>
+
+        </div>
+
+
+        <!-- Statistics Cards -->
+        <section class="cards">
+
+            <div class="card">
+                <div class="card-title">
+                    Total Transactions
+                </div>
+
+                <div class="card-value blue">
+                    83,560
+                </div>
+            </div>
+
+
+            <div class="card">
+                <div class="card-title">
+                    Fraud Transactions
+                </div>
+
+                <div class="card-value red">
+                    112
+                </div>
+            </div>
+
+
+            <div class="card">
+                <div class="card-title">
+                    Genuine Transactions
+                </div>
+
+                <div class="card-value green">
+                    83,448
+                </div>
+            </div>
+
+
+            <div class="card">
+                <div class="card-title">
+                    XGBoost Accuracy
+                </div>
+
+                <div class="card-value purple">
+                    99.87%
+                </div>
+            </div>
+
+        </section>
+
+
+        <!-- Main Panels -->
+        <section class="content-grid">
+
+
+            <!-- Prediction -->
+            <div class="panel">
+
+                <h2>Transaction Risk Analysis</h2>
+
+                <p class="panel-description">
+                    Enter transaction details to check whether the transaction
+                    is potentially fraudulent.
+                </p>
+
+
+                <div class="form-group">
+                    <label>Transaction Type</label>
+
+                    <select id="transactionType">
+                        <option>PAYMENT</option>
+                        <option>TRANSFER</option>
+                        <option>CASH_OUT</option>
+                        <option>DEBIT</option>
+                        <option>CASH_IN</option>
+                    </select>
+                </div>
+
+
+                <div class="form-group">
+                    <label>Transaction Amount</label>
+
+                    <input id="amount" type="number" placeholder="Enter amount">                </div>
+
+
+                <div class="form-group">
+                    <label>Origin Account Balance</label>
+
+                    <input id="oldbalanceOrg" type="number" placeholder="Enter old balance">
+                </div>
+
+
+                <div class="form-group">
+                    <label>New Origin Balance</label>
+
+                    <input id="newbalanceOrig" type="number" placeholder="Enter new balance">
+                </div>
+
+
+                <div class="form-group">
+                    <label>Destination Account Balance</label>
+
+                    <input     id="oldbalanceDest" type="number" placeholder="Enter destination balance">
+                </div>
+
+
+                <button id="analyzeBtn" class="predict-btn"> Analyze Transaction </button>
+ 
+                <div id="predictionResult" class="alert" style="display:none;"> </div>
+              
+                <div class="alert">
+                    Model: XGBoost &nbsp; | &nbsp;
+                    Average inference time: ~1 ms
+                </div>
+
+            </div>
+
+
+            <!-- Model Information -->
+            <div class="panel">
+
+                <h2>Model Performance</h2>
+
+                <p class="panel-description">
+                    Comparison of machine learning models used in the system.
+                </p>
+
+
+                <div class="metric">
+                    <span class="metric-name">
+                        Logistic Regression
+                    </span>
+
+                    <span class="metric-value">
+                        99.89%
+                    </span>
+                </div>
+
+
+                <div class="metric">
+                    <span class="metric-name">
+                        XGBoost
+                    </span>
+
+                    <span class="metric-value green">
+                        99.87%
+                    </span>
+                </div>
+
+
+                <div class="metric">
+                    <span class="metric-name">
+                        Selected Model
+                    </span>
+
+                    <span class="metric-value blue">
+                        XGBoost
+                    </span>
+                </div>
+
+
+                <div class="metric">
+                    <span class="metric-name">
+                        Inference Time
+                    </span>
+
+                    <span class="metric-value">
+                        1.04 ms
+                    </span>
+                </div>
+
+
+                <div class="metric">
+                    <span class="metric-name">
+                        Memory Usage
+                    </span>
+
+                    <span class="metric-value">
+                        342.47 MB
+                    </span>
+                </div>
+
+
+                <div class="metric">
+                    <span class="metric-name">
+                        API
+                    </span>
+
+                    <span class="metric-value green">
+                        Active
+                    </span>
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- Analytics -->
+        <section class="analytics">
+
+            <div class="panel">
+
+                <h2>Fraud Distribution</h2>
+
+                <p class="panel-description">
+                    Distribution of genuine and fraudulent transactions.
+                </p>
+
+                <div class="metric">
+                    <span class="metric-name">
+                        Genuine
+                    </span>
+
+                    <span class="metric-value green">
+                        99.866%
+                    </span>
+                </div>
+
+                <div class="metric">
+                    <span class="metric-name">
+                        Fraud
+                    </span>
+
+                    <span class="metric-value red">
+                        0.134%
+                    </span>
+                </div>
+
+            </div>
+
+
+            <div class="panel">
+
+                <h2>System Information</h2>
+
+                <p class="panel-description">
+                    Current deployment information.
+                </p>
+
+                <div class="metric">
+                    <span class="metric-name">
+                        ML Algorithm
+                    </span>
+
+                    <span class="metric-value">
+                        XGBoost
+                    </span>
+                </div>
+
+                <div class="metric">
+                    <span class="metric-name">
+                        Backend
+                    </span>
+
+                    <span class="metric-value">
+                        Flask
+                    </span>
+                </div>
+
+                <div class="metric">
+                    <span class="metric-name">
+                        API Framework
+                    </span>
+
+                    <span class="metric-value">
+                        Flask
+                    </span>
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+</div>
+
+<script src="{{ url_for('static', filename='script.js') }}"></script>
+
+</body>
+</html>
