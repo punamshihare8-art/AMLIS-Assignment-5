@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>AMLIS | Analytics</title>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+
+    <h1>Fraud Analytics</h1>
+
+    <p>
+        Analytics and performance information of the
+        Online Payment Fraud Detection System.
+    </p>
+
+    <hr>
+
+    <h2>Fraud Distribution</h2>
+
+    <div>
+        <p><strong>Genuine Transactions:</strong> 99.866%</p>
+        <p><strong>Fraud Transactions:</strong> 0.134%</p>
+    </div>
+
+    <h2>Model Accuracy</h2>
+
+    <div>
+        <p><strong>Logistic Regression:</strong> 99.89%</p>
+        <p><strong>XGBoost:</strong> 99.87%</p>
+    </div>
+
+    <h2>Selected Model</h2>
+
+    <p><strong>XGBoost Classifier</strong></p>
+
+    <h2>Performance</h2>
+
+    <p><strong>Average Inference Time:</strong> 1.04 ms</p>
+    <p><strong>Memory Usage:</strong> 342.47 MB</p>
+
+    <br>
+
+    <a href="/">← Back to Dashboard</a>
+
+</body>
+</html>
